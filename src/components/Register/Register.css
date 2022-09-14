@@ -1,0 +1,38 @@
+.register {
+  width: 396px;
+  margin: 0 auto;
+}
+
+.register__header {
+  margin: 70px 0 30px;
+}
+
+.register__fieldset {
+  margin-bottom: 40px;
+}
+
+.register__footer {
+  margin: 19px 0 0;
+}
+
+@media screen and (max-width: 425px) {
+
+  .register {
+    width: 260px;
+  }
+
+  .register__header {
+    margin: 56px 0 70px;
+  }
+
+  .register__footer {
+    margin: 107px 0 20px;
+  }
+
+}
+
+/* for demonstrate */
+.register .password-input-error::after {
+  display: block;
+  content: "Что-то пошло не так...";
+}
