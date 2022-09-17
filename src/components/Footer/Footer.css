@@ -1,5 +1,6 @@
 .footer {
   padding: 79px 0 10px;
+  align-self: flex-end;
 }
 
 .footer__content {

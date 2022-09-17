@@ -49,6 +49,10 @@
   text-decoration: none;
 }
 
+.about-me__github-link:hover {
+  opacity: 0.6;
+}
+
 .about-me__photo {  
   width: 270px;
   min-width: 255px;

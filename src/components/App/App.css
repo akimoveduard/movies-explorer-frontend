@@ -5,6 +5,13 @@
   position: relative;
   padding: 0;
   margin: 0 auto;
-  max-width: 100%;
   min-width: 320px;
+}
+
+.app__content {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: max-content;
+  position: relative;
 }

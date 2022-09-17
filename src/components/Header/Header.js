@@ -4,11 +4,15 @@ import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 
 import Navigation from '../Navigation/Navigation';
+import BurgerButton from '../BurgerButton/BurgerButton';
 import RegAuthLinks from '../RegAuthLinks/RegAuthLinks';
 
 import logo from '../../images/logo.svg';
 
-function Header({ isLogged }) {  
+function Header({
+  isLogged,
+  onButtonClick
+}) {  
 
   const location = useLocation().pathname;
 
@@ -17,12 +21,20 @@ function Header({ isLogged }) {
       <div className="header__content">
         {(location !== '/') ? (
           <Link to="/" className="header__logo-link">
-            <img className="logo" src={logo} alt="Movies Explorer" />
+            <img className="header__logo" src={logo} alt="Movies Explorer" />
           </Link>
         ) : (
           <img className="logo" src={logo} alt="Movies Explorer" />
         )}
-        {isLogged ? <Navigation /> : <RegAuthLinks />}
+        {isLogged 
+          ? <>
+              <Navigation />
+              <BurgerButton
+                onButtonClick={ onButtonClick }
+              />
+            </>
+          : <RegAuthLinks />
+        }
       </div>
     </header>
   );

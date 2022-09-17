@@ -1,0 +1,33 @@
+.movies {
+  box-sizing: content-box;
+  max-width: 1140px;
+  width: calc(100% - 140px);
+  margin: 35px auto 0;
+  padding: 0 70px;
+}
+
+@media screen and (max-width: 768px) {
+
+  .movies {
+    width: calc(100% - 60px);
+    padding: 0 30px;
+  }
+
+}
+
+@media screen and (max-width: 434px) and (min-width: 426px) {
+
+  .movies {
+    padding: 0 20px;
+  }
+
+}
+
+@media screen and (max-width: 425px) {
+
+  .movies {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+  }
+
+}
