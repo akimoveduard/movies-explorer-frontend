@@ -4,7 +4,11 @@ import './BurgerButton.css';
 
 function BurgerButton({ onButtonClick }) {
   return(
-    <button className="burger-button" title="Открыть меню" onClick={ onButtonClick }/>
+    <button
+      className="burger-button"
+      title="Открыть меню"
+      type="button"
+      onClick={ onButtonClick }/>
   )
 }
 

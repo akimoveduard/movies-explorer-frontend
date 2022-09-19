@@ -19,14 +19,14 @@ function MovieCard(props) {
         <Switch>
           <Route path="/movies">
             {props.movieData.saved
-              ? (<span className="movie-card__button movie-card__checkmark"></span>)
-              : (<button className="movie-card__button movie-card__button-save">
+              ? (<button className="movie-card__button movie-card__checkmark" type="button" />)
+              : (<button className="movie-card__button movie-card__button-save" type="button">
                   Сохранить
                 </button>)
             }
           </Route>
           <Route path="/saved-movies">
-            <button className="movie-card__button movie-card__button-delete">
+            <button className="movie-card__button movie-card__button-delete" type="button">
               <span className="movie-card__button-delete-caption">Удалить</span>
             </button>
           </Route>

@@ -160,7 +160,10 @@ function MoviesCardList({
       {showMoreButton
       ? (
         <div className="movies-card-list__button-container">
-          <button className="movies-card-list__button">
+          <button
+            className="movies-card-list__button"
+            type="button"
+          >
             Еще
           </button>
         </div>
