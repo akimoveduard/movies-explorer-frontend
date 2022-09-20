@@ -1,0 +1,119 @@
+.search-form {
+  margin: 35px 0 10px 0;
+  padding-bottom: 69px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.search-form__form {
+  background-color: #F9F9F9;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-form__input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 72px;
+  background-image: url(../../images/zoom.svg);
+  background-position: center left 19px;
+  background-repeat: no-repeat;
+  background-size: 34px 34px;
+  flex-shrink: 1;
+  width: 100%;
+}
+
+.search-form__input {
+  border: 0;
+  background-color: unset;
+  outline: unset;
+  margin: 15px 0 15px 63px;
+  padding: 10px 0;
+  font-size: 18px;
+  line-height: 20px;
+  width: 100%;
+}
+
+.search-form__input:hover {
+  outline: 1px solid #E8E8E8;
+}
+
+.search-form__input:focus {
+  outline: 1px solid #E8E8E8;
+}
+
+.search-form__input::placeholder {
+  font-size: 18px;
+  line-height: 20px;
+  color: #A0A0A0;
+}
+
+.search-form__button {
+  border: unset;
+  border-radius: 50%;
+  background-color: #3456F3;
+  width: 34px;
+  height: 34px;
+  margin: 0 30px 0 46px;
+  background-image: url(../../images/zoom-white.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.search-form__button:hover {
+  opacity: 0.7;
+}
+
+.search-form__button-caption {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 768px) {
+
+  .search-form {
+    margin: 45px 0 10px 0;
+    padding-bottom: 109px;
+  }
+
+  .search-form__button {
+    margin-right: 19px;
+  }
+
+}
+
+@media screen and (max-width: 555px) {
+
+  .search-form {
+    padding-bottom: 35px;
+  }
+
+  .search-form__form {
+    display: flex;
+    flex-direction: column;
+    background-color: unset;
+  }
+
+  .search-form__input-container {
+    background-image: unset;
+    background-color: #F9F9F9;
+    border-radius: 9px;
+  }
+
+  .search-form__input {
+    margin: 0;
+    padding: 25px 19px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  
+  .search-form__input::placeholder {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+}

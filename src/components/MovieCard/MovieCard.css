@@ -1,0 +1,137 @@
+.movie-card {
+  background: #FDFDFD;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+}
+
+.movie-card__header {
+  display: flex;
+  justify-content: space-between;
+  height: 54px;
+}
+
+.movie-card__title {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  margin: 18px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.movie-card__duration {
+  font-size: 13px;
+  line-height: 18px;
+  color: #A0A0A0;
+  margin: 18px;
+  padding: 0;
+}
+
+.movie-card__image-container {
+  width: 100%;
+}
+
+.movie-card__image {
+  max-width: 100%;
+  min-width: 100%;
+  object-fit: fill;
+}
+
+.movie-card__footer {
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-card__button {
+  border: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100px;
+  height: 29px;
+}
+
+.movie-card__checkmark {
+  display: block;
+  width: 100px;
+  height: 29px;
+  background-color: #FF3055;
+  border-radius: 30px;
+  background-image: url(../../images/checkmark.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.movie-card__button-save {
+  background-color: #F9F9F9;
+  font-size: 12px;
+  line-height: 11px;
+  padding: 9px 15px;
+}
+
+.movie-card__button-delete {
+  background-color: #F9F9F9;
+  background-image: url(../../images/delete-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.movie-card__button-delete-caption {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 768px) {
+
+  /* имитация api: показать только первые 8 карт */
+  .movie-card {
+    display: none;
+  }
+
+  .movie-card:nth-child(-n+8) {
+    display: block;
+  }
+
+}
+
+@media screen and (max-width: 425px) {
+
+  .movie-card__header {
+    height: 46px;
+  }
+
+  .movie-card__title {
+    margin: 14px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .movie-card__duration {
+    margin: 14px;
+    font-size: 10px;
+    line-height: 18px;
+  }
+
+  .movie-card__footer {
+    height: 57px;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  
+  /* имитация api: показать только первые 5 карт */
+  .movie-card:nth-child(-n+8) {
+    display: none;
+  }
+
+  .movie-card:nth-child(-n+5) {
+    display: block;
+  }
+  
+}
