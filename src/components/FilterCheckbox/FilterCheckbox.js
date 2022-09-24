@@ -9,6 +9,7 @@ function FilterCheckbox() {
           id="shorties"
           name="filter-checkbox"
           className="filter-checkbox__checkbox"
+          value="true"
           type="checkbox" />
         <span className="filter-checkbox__pseudo-checkbox"></span>
         <span className="filter-checkbox__label">Короткометражки</span>

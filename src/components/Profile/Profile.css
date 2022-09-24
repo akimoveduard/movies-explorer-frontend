@@ -30,18 +30,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E8E8E8;
-  padding: 8px 0 16px;
-  margin: 8px 0 0;
+  border-top: 1px solid #E8E8E8;
+  padding: 16px 0 14px;
+  margin-bottom: 2px;
+  position: relative;
 }
 
 .profile__form-fieldset:first-of-type {
   padding-top: 0;
   margin-top: 0;
+  border: unset;
 }
 
 .profile__form-fieldset:last-of-type {
-  border: unset;
+  padding-top: 14px;
 }
 
 .profile__form-label {
@@ -64,6 +66,23 @@
   outline: 1px solid #E8E8E8;
 }
 
+.profile__form-input-error {
+  border: 1px solid #EE3465;
+  background-color: rgba(255, 104, 56, 0.1);
+  color: #EE3465;
+}
+
+.profile__form-error-message {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  color: #FF3055;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: right;
+}
+
 .profile__form-footer {
   width: 100%;
   display: flex;
@@ -80,6 +99,10 @@
   padding: 0;
   margin: 0 0 16px;
   cursor: pointer;
+}
+
+.profile__button:disabled {
+  color: #C2C2C2;
 }
 
 .profile__button:hover {

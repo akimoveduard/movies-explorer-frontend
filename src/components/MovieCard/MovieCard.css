@@ -30,6 +30,7 @@
   color: #A0A0A0;
   margin: 18px;
   padding: 0;
+  white-space: nowrap;
 }
 
 .movie-card__image-container {

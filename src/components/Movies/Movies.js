@@ -5,12 +5,23 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 import './Movies.css';
 
-function Movies() {
+function Movies({
+  onSubmit,
+  moviesData,
+  prevSearchRequest,
+  isLoading
+}) {
 
   return(
     <div className="movies">
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm
+        onSubmit={onSubmit}
+        prevSearchRequest={prevSearchRequest}
+      />   
+      <MoviesCardList
+        moviesData={moviesData}
+        showMoreButton={true}
+      />
     </div>
   );
 }
