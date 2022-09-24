@@ -1,7 +1,5 @@
 import config from '../config.json';
 
-const BASE_URL = config.API_SERVER_URL;
-
 const CONFIG = {
   baseUrl: config.API_SERVER_URL,
   headers: {

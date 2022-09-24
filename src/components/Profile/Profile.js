@@ -9,7 +9,6 @@ import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
 import './Profile.css';
 
 function Profile({
-  isLoggedIn,
   onUpdate,
   onLogout,
   isFormErrorMessageShown,

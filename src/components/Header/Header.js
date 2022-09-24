@@ -10,14 +10,16 @@ import RegAuthLinks from '../RegAuthLinks/RegAuthLinks';
 import logo from '../../images/logo.svg';
 
 function Header({
-  isLogged,
+  isLoggedIn,
   onButtonClick
 }) {  
 
   const location = useLocation().pathname;
 
+  console.log(isLoggedIn)
+
   return (
-    <header className={`header${!isLogged ? " header_theme_dark" : ""}`}>
+    <header className={`header${!isLoggedIn ? " header_theme_dark" : ""}`}>
       <div className="header__content">
         {(location !== '/') ? (
           <Link to="/" className="header__logo-link">
@@ -26,7 +28,7 @@ function Header({
         ) : (
           <img className="logo" src={logo} alt="Movies Explorer" />
         )}
-        {isLogged 
+        {isLoggedIn 
           ? <>
               <Navigation />
               <BurgerButton
