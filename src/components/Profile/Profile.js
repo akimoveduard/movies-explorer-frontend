@@ -2,23 +2,22 @@ import React from "react";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-
 import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
 
 import './Profile.css';
 
 function Profile({
+  isLoggedIn,
+  currentUser,
   onUpdate,
   onLogout,
   isFormErrorMessageShown,
-  formErrorMessage,
+  formErrorMessage
 }) {
-
-  const currentUser = React.useContext(CurrentUserContext)
-
+  
   const [username, setUsername] = React.useState(currentUser.name);
   const [email, setEmail] = React.useState(currentUser.email);
+
   const [buttonSubmitEnable, SetButtonSubmitEnable] = React.useState(false);
 
   const {
@@ -34,7 +33,6 @@ function Profile({
       });
 
   React.useEffect(() => {
-    console.log(username)
     if (username === currentUser.name && email === currentUser.email && isValid) {
       SetButtonSubmitEnable(true);
     } else if (isValid) SetButtonSubmitEnable(true);

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
+
+import { PATH_EXEPTIONS } from '../../utils/constants';
 
 import "./Header.css";
 
@@ -12,33 +14,37 @@ import logo from '../../images/logo.svg';
 function Header({
   isLoggedIn,
   onButtonClick
-}) {  
+}) { 
 
   const location = useLocation().pathname;
-
-  console.log(isLoggedIn)
+  const isHeaderShown = !(useRouteMatch(PATH_EXEPTIONS.header));
 
   return (
-    <header className={`header${!isLoggedIn ? " header_theme_dark" : ""}`}>
-      <div className="header__content">
-        {(location !== '/') ? (
-          <Link to="/" className="header__logo-link">
-            <img className="header__logo" src={logo} alt="Movies Explorer" />
-          </Link>
-        ) : (
-          <img className="logo" src={logo} alt="Movies Explorer" />
-        )}
-        {isLoggedIn 
-          ? <>
-              <Navigation />
-              <BurgerButton
-                onButtonClick={ onButtonClick }
-              />
-            </>
-          : <RegAuthLinks />
-        }
-      </div>
-    </header>
+    <>
+      {isHeaderShown &&
+        <header className={`header${location==='/' && " header_theme_dark"}`}>
+          <div className="header__content">
+          {(location !== '/') 
+            ? (
+            <Link to="/" className="header__logo-link">
+              <img className="header__logo" src={logo} alt="Movies Explorer" />
+            </Link>
+            ) : (
+            <img className="logo" src={logo} alt="Movies Explorer" />
+          )}
+          {isLoggedIn && location !== '/'
+            ? <>
+                <Navigation />
+                <BurgerButton
+                  onButtonClick={ onButtonClick }
+                />
+              </>
+            : <RegAuthLinks />
+          }
+          </div>
+        </header>
+      }
+    </>
   );
 }
 

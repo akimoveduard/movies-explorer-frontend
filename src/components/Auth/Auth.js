@@ -71,7 +71,7 @@ function Auth({
             {...register('email', {
               required: 'Обязательное поле',
               pattern: {
-                value: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: 'Введите e-mail'
               },
               onChange: (event) => handleEmailChange(event),
