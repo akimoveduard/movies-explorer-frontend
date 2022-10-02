@@ -66,47 +66,12 @@ export const getUser = () => {
     headers: CONFIG.headers,
   })
   .then(response => handleResponse(response));
-
 }
 
 export const checkToken = (token) => {
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',
-    headers: {
-      ...CONFIG.headers,
-      Authorization: `Bearer ${token}`,
-    }
-  })
-  .then(response => handleResponse(response));
-}
-
-export const saveMovie = ({movie, token}) => {
-  return fetch(`${CONFIG.baseUrl}/movies`, {
-    method: "POST",
-    headers: {
-      ...CONFIG.headers,
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(movie),
-  })
-  .then(response => handleResponse(response));
-};
-
-export const getMovies = (token) => {
-  return fetch(`${CONFIG.baseUrl}/movies`, {
-    method: "GET",
-    headers: {
-      ...CONFIG.headers,
-      Authorization: `Bearer ${token}`,
-    }
-  })
-  .then(response => handleResponse(response));
-}
-
-export const deleteMovie = (id, token) => {
-  return fetch(`${CONFIG.baseUrl}/movies/${id}`, {
-    method: "DELETE",
     headers: {
       ...CONFIG.headers,
       Authorization: `Bearer ${token}`,

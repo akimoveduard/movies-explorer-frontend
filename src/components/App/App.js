@@ -12,6 +12,7 @@ import { MoviesContext } from '../../contexts/MoviesContext';
 
 import * as userApi from '../../utils/userApi';
 import { moviesApi } from '../../utils/MoviesApi';
+import * as mainApi from '../../utils/mainApi';
 import { filterMovies } from '../../utils/filterMovies';
 
 import Header from '../Header/Header';
@@ -33,7 +34,8 @@ import "./App.css";
 function App() {
   
   const history = useHistory();
-  const token = localStorage.getItem('jwt');
+
+  const token = (localStorage.getItem('jwt'));
 
   const statPrevFilteredMovies = () => {
     if (localStorage.getItem('prevFilteredMovies') &&
@@ -48,6 +50,12 @@ function App() {
   const [isFormErrorMessageShown, setIsFormErrorMessageShown] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isSavedMoviesLoaded, setIsSavedMoviesLoaded] = React.useState(false);
+
+  const [
+    buttonSubmitEnable,
+    setButtonSubmitEnable
+  ] = React.useState(false);
 
   /* user section */
 
@@ -80,7 +88,6 @@ function App() {
     isShortFilmsOn,
     setIsShortFilmsOn,
     isSavedShortFilmsOn,
-    setIsSavedShortFilmsOn,
   } = React.useContext(MoviesContext);
 
   const [movies, setMovies] = React.useState(
@@ -100,8 +107,10 @@ function App() {
   );
 
   useEffect(() => {
-    if (isLoggedIn && !localStorage.getItem('localMovies')) {
+    setSearchError('');
+    if (isLoggedIn && localStorage.getItem('localMovies')) {
       localStorage.setItem('prevFilteredMovies', JSON.stringify(filteredMovies));
+      if (!filteredMovies.length) setSearchError(ERROR_MESSAGES['not found error']);
     }
   }, [filteredMovies]);
 
@@ -153,11 +162,12 @@ function App() {
   /* saved-movies handlers */
 
   const getSavedMovies = async (token) => {
-    checkToken(token);
+    (checkToken(token));
     try {
-      const downloadedSavedMovies = await userApi.getMovies(token);
+      const downloadedSavedMovies = await mainApi.getMovies(token);
       setSavedMovies(downloadedSavedMovies);
       setSavedMoviesIds(arraySavedMoviesIds(downloadedSavedMovies));
+      setIsSavedMoviesLoaded(true);
     }
     catch (error) {
       console.log(error)
@@ -169,6 +179,11 @@ function App() {
       ids = [...ids, movie.movieId];
     })
     return (ids);
+  }
+
+  function restoreSavedMovies() {
+    setSavedMoviesData(savedMovies);
+    setSavedMoviesSearchError('');
   }
   
   /* search movies handlers */
@@ -191,7 +206,6 @@ function App() {
       const downloadedMovies = (!movies.length) ? await moviesApi.getMovies() : movies;
       setMovies(downloadedMovies);
       setFilteredMovies(filterMovies(downloadedMovies, request, isShortFilmsOn));
-      if (!filteredMovies.length && localStorage.getItem('localMovies')) setSearchError(ERROR_MESSAGES['not found error']);
       localStorage.setItem('prevSearchRequest', request);
       setSearchRequest(request);
     }
@@ -210,7 +224,7 @@ function App() {
     checkToken(token);
     try {      
       const savedMovie = await
-        userApi.saveMovie(
+        mainApi.saveMovie(
           {movie: {
               country: movie.country || '—',
               director: movie.director,
@@ -242,7 +256,7 @@ function App() {
       savedMovies.filter(item => item.movieId === movie.id) :
       [movie];
       moviesToDelete.map((deletingMovie) => {
-        userApi.deleteMovie(deletingMovie._id, token);
+        mainApi.deleteMovie(deletingMovie._id, token);
         setSavedMovies(savedMovies.filter((item) => item._id !== deletingMovie._id));
         setSavedMoviesIds(savedMoviesIds.filter((item) => item !== deletingMovie.movieId));
         return ('');
@@ -285,39 +299,50 @@ function App() {
   }
 
   function handleRegistration(username, email, password) {
+    setButtonSubmitEnable(false);    
     userApi.register(username, email, password)
       .then((res) => {
         handleLogin(email, password);
+        setButtonSubmitEnable(true);
       })
       .catch((error) => {
         handleFormErrorMessage(error);
-      });
+      })
+      .finally(() => setButtonSubmitEnable(true));
   }
 
   function handleLogin(email, password) {
+    setButtonSubmitEnable(false);
     userApi.login(email, password)
       .then((res) => {
         localStorage.setItem('jwt', res.token);
         checkToken(localStorage.getItem('jwt'));
+        setIsLoggedIn(true);
         setIsFormErrorMessageShown(false);
+        setButtonSubmitEnable(true);
         history.push('/movies');
       })
       .catch((error) => {
         handleFormErrorMessage(error);
         setIsLoggedIn(false);
-      });
+      })
+      .finally(() => setButtonSubmitEnable(true));
   }
 
   function handleUpdateProfile(username, email) {
     checkToken(token);
-    userApi.update(username, email, token)
-      .then((res) => {
-        setCurrentUser(res);
-        setNotificationMessage(PROFILE_UPDATE_SUCCESS_MESSAGE);
-      })
-      .catch((error) => {
-        handleFormErrorMessage(error);
-      });
+    setButtonSubmitEnable(false);
+    if (username !== currentUser.name || email !== currentUser.email) {
+      userApi.update(username, email, token)
+        .then((res) => {
+          setCurrentUser(res);
+          setNotificationMessage(PROFILE_UPDATE_SUCCESS_MESSAGE);
+        })
+        .catch((error) => {
+          handleFormErrorMessage(error);
+        })
+        .finally(() => setButtonSubmitEnable(true));
+    }
   }
   
   function handleLogout() {
@@ -328,11 +353,9 @@ function App() {
     /* очистка стейтов movies */
     setMovies([]);
     setFilteredMovies([]);
-    setSearchRequest([]);
-    setIsShortFilmsOn(false);
-    setIsSavedShortFilmsOn(false);
+    setSearchRequest('');
 
-    history.push('/signin');
+    history.push('/');
   }
 
   const checkToken = (token) => {
@@ -350,18 +373,14 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       setIsShortFilmsOn(Boolean(localStorage.getItem('searchShortFilms')));
-      getSavedMovies(token);
+      if (!isSavedMoviesLoaded) getSavedMovies(token);
       setNotificationMessage('');
-    } else {
-        handleLogout();
-      }
+    }
   }, [isLoggedIn]);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (token) checkToken(token);
-    else {
-      handleLogout();
-    }
+    else setIsLoggedIn(false);
   }, []);
 
   return (
@@ -385,6 +404,8 @@ function App() {
                 formErrorMessage={formErrorMessage}
                 notificationMessage={notificationMessage}
                 clearErrors={clearFormErrorMessage}
+                buttonSubmitEnable={buttonSubmitEnable}
+                setButtonSubmitEnable={setButtonSubmitEnable}
               />
               <ProtectedRoute
                 exact path="/movies"
@@ -409,6 +430,7 @@ function App() {
                 onDelete={handleDeleteMovie}
                 onSaveClick={handleSaveButtonClick}
                 errorMessage={savedMoviesSearchError}
+                onLoad={restoreSavedMovies}
               />
               <Route exact path="/signup">
                 <Register
@@ -418,6 +440,8 @@ function App() {
                   formErrorMessage={formErrorMessage}
                   setFormErrorMessage={setFormErrorMessage}
                   clearErrors={clearFormErrorMessage}
+                  buttonSubmitEnable={buttonSubmitEnable}
+                  setButtonSubmitEnable={setButtonSubmitEnable}
                 />
               </Route>
               <Route exact path="/signin">
@@ -427,6 +451,8 @@ function App() {
                   isFormErrorMessageShown={isFormErrorMessageShown}
                   formErrorMessage={formErrorMessage}
                   clearErrors={clearFormErrorMessage}
+                  buttonSubmitEnable={buttonSubmitEnable}
+                  setButtonSubmitEnable={setButtonSubmitEnable}
                 />
               </Route>
               <Route path="/404" component={NotFoundPage} />

@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Switch, Route } from "react-router-dom";
 
-import noImage from '../../images/no_photo.png';
-import { URL_REGEXP, URLS } from "../../utils/constants";
+import { URLS } from "../../utils/constants";
 
 import './MovieCard.css';
 

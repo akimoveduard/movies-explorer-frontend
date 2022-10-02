@@ -19,6 +19,8 @@ function Auth({
   isFormErrorMessageShown,
   formErrorMessage,
   clearErrors,
+  buttonSubmitEnable,
+  setButtonSubmitEnable,
 }) {
 
   const history = useHistory();
@@ -29,7 +31,6 @@ function Auth({
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [buttonSubmitEnable, SetButtonSubmitEnable] = React.useState(false);
 
   const {
 		register,
@@ -39,9 +40,9 @@ function Auth({
 
   React.useEffect(() => {
 		if (!isValid) {
-			SetButtonSubmitEnable(false);
+			setButtonSubmitEnable(false);
 		} else {
-      SetButtonSubmitEnable(true);
+      setButtonSubmitEnable(true);
     }
 	}, [isValid]);
 
@@ -57,7 +58,7 @@ function Auth({
     onLogin(email, password);
   }
 
-  if (isLoggedIn) return <Redirect to="/profile" />;
+  if (isLoggedIn) return <Redirect to="/movies" />;
 
   return (
     <main className="auth">

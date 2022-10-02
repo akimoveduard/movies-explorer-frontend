@@ -15,7 +15,9 @@ function Profile({
   isFormErrorMessageShown,
   formErrorMessage,
   notificationMessage,
-  clearErrors
+  clearErrors,
+  buttonSubmitEnable,
+  setButtonSubmitEnable
 }) {
 
   const history = useHistory();
@@ -26,8 +28,6 @@ function Profile({
   
   const [username, setUsername] = React.useState(currentUser.name);
   const [email, setEmail] = React.useState(currentUser.email);
-
-  const [buttonSubmitEnable, SetButtonSubmitEnable] = React.useState(false);
 
   const {
 		register,
@@ -42,10 +42,10 @@ function Profile({
       });
 
   React.useEffect(() => {
-    if (username === currentUser.name && email === currentUser.email && isValid) {
-      SetButtonSubmitEnable(true);
-    } else if (isValid) SetButtonSubmitEnable(true);
-		else SetButtonSubmitEnable(false);
+    if (username === currentUser.name && email === currentUser.email) {
+      setButtonSubmitEnable(false);
+    } else if (isValid) setButtonSubmitEnable(true);
+		else setButtonSubmitEnable(false);
 	}, [isValid, username, email, currentUser.name, currentUser.email]);  
 
   function handleUsernameChange(event) {

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useScreenWidth } from '../../hooks/useScreenWidth';
+import { SCREEN_WIDTH, CARDSLIST_LENGTH } from '../../utils/constants';
 
 import MovieCard from '../MovieCard/MovieCard';
 
@@ -23,15 +24,15 @@ function MoviesCardList({
   const screenWidth = useScreenWidth();
 
   React.useEffect(() => {
-    if (screenWidth > 1024) {
-      setLengthCardsList(12);
-      setLengthCardsListMore(3);
-    } else if (screenWidth <= 1024 && screenWidth > 556) {
-      setLengthCardsList(8);
-      setLengthCardsListMore(2);
-    } else if (screenWidth <= 555) {
-      setLengthCardsList(5);
-      setLengthCardsListMore(2);
+    if (screenWidth > SCREEN_WIDTH.tablet) {
+      setLengthCardsList(CARDSLIST_LENGTH.tablet.cards);
+      setLengthCardsListMore(CARDSLIST_LENGTH.tablet.morecards);
+    } else if (screenWidth <= SCREEN_WIDTH.tablet && screenWidth > SCREEN_WIDTH.small) {
+      setLengthCardsList(CARDSLIST_LENGTH.small.cards);
+      setLengthCardsListMore(CARDSLIST_LENGTH.small.morecards);
+    } else if (screenWidth <= SCREEN_WIDTH.xsmall) {
+      setLengthCardsList(CARDSLIST_LENGTH.xsmall.cards);
+      setLengthCardsListMore(CARDSLIST_LENGTH.xsmall.morecards);
     }
   }, [screenWidth, lengthCardsList, lengthCardsListMore]);
 

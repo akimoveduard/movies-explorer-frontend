@@ -22,3 +22,24 @@ export const ERROR_MESSAGES = {
 
 export const PROFILE_UPDATE_SUCCESS_MESSAGE = 
   'Данные профиля успешно обновлены.';
+
+export const SCREEN_WIDTH = {
+  tablet: 1024,
+  small: 556,
+  xsmall: 555,
+}
+
+export const CARDSLIST_LENGTH = {
+  tablet: {
+    cards: 12,
+    morecards: 3,
+  },
+  small: {
+    cards: 8,
+    morecards: 2,
+  },
+  xsmall: {
+    cards: 5,
+    morecards: 2,
+  }
+}

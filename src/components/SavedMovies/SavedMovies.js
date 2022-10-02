@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import { MoviesContext } from "../../contexts/MoviesContext";
 
@@ -16,7 +17,14 @@ function SavedMovies({
   onDelete,
   onSaveClick,
   errorMessage,
+  onLoad
 }) {
+
+  const history = useHistory();
+
+  useEffect(() => {
+    onLoad();
+  }, [history]);
 
   const {
     isSavedShortFilmsOn,

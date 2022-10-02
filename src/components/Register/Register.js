@@ -19,6 +19,8 @@ function Register({
   isFormErrorMessageShown,
   formErrorMessage,
   clearErrors,
+  buttonSubmitEnable,
+  setButtonSubmitEnable,
 }) {
 
   const history = useHistory();
@@ -31,7 +33,7 @@ function Register({
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [buttonSubmitEnable, SetButtonSubmitEnable] = React.useState(false);
+  //const [buttonSubmitEnable, SetButtonSubmitEnable] = React.useState(false);
 
   const {
 		register,
@@ -41,9 +43,9 @@ function Register({
 
   React.useEffect(() => {
 		if (!isValid) {
-			SetButtonSubmitEnable(false);
+			setButtonSubmitEnable(false);
 		} else {
-      SetButtonSubmitEnable(true);
+      setButtonSubmitEnable(true);
     }
 	}, [isValid]);
 
@@ -63,7 +65,7 @@ function Register({
     onRegistration(username, email, password);
   }
 
-  if (isLoggedIn) return <Redirect to="/profile" />;
+  if (isLoggedIn) return <Redirect to="/movies" />;
 
   return (
     <main className="register">
