@@ -5,3 +5,5 @@
 Ссылка на бекенд: https://api.akimoved.nomoredomains.sbs/
 
 Ссылка на собранное приложение: https://akimoved.nomoredomains.sbs/
+
+Pull request: https://github.com/akimoveduard/movies-explorer-frontend/pull/2
