@@ -1,19 +1,28 @@
 import React from "react";
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { useHistory } from "react-router-dom";
 
 import FormErrorMessage from "../FormErrorMessage/FormErrorMessage";
+import Notification from "../Notification/Notification";
 
 import './Profile.css';
 
 function Profile({
-  isLoggedIn,
   currentUser,
   onUpdate,
   onLogout,
   isFormErrorMessageShown,
-  formErrorMessage
+  formErrorMessage,
+  notificationMessage,
+  clearErrors
 }) {
+
+  const history = useHistory();
+  
+  React.useEffect(() => {
+    clearErrors();
+  }, [history]);
   
   const [username, setUsername] = React.useState(currentUser.name);
   const [email, setEmail] = React.useState(currentUser.email);
@@ -37,9 +46,7 @@ function Profile({
       SetButtonSubmitEnable(true);
     } else if (isValid) SetButtonSubmitEnable(true);
 		else SetButtonSubmitEnable(false);
-	}, [isValid, username, email, currentUser.name, currentUser.email]);
-
-  
+	}, [isValid, username, email, currentUser.name, currentUser.email]);  
 
   function handleUsernameChange(event) {
     setUsername(event.target.value);
@@ -86,10 +93,10 @@ function Profile({
               value={username}
             />
             <ErrorMessage
-						  errors={errors}
-						  name="username"
-						  render={({ message }) => <span className="profile__form-error-message">{message}</span>}
-					  />
+              errors={errors}
+              name="username"
+              render={({ message }) => <span className="profile__form-error-message">{message}</span>}
+            />
           </div>
           <div className="profile__form-fieldset">
             <label
@@ -115,17 +122,22 @@ function Profile({
               value={email}
             />
             <ErrorMessage
-						  errors={errors}
-						  name="email"
-						  render={({ message }) => <span className="profile__form-error-message">{message}</span>}
-					  />
+              errors={errors}
+              name="email"
+              render={({ message }) => <span className="profile__form-error-message">{message}</span>}
+            />
           </div>
         </div>
         <div className="profile__form-footer">
+          {notificationMessage &&
+            <Notification
+              notificationMessage={notificationMessage}
+            />
+          }
           {isFormErrorMessageShown &&
-            (<FormErrorMessage
+            <FormErrorMessage
               formErrorMessage={formErrorMessage}
-            />)
+            />
           }
           <button
             className="profile__button profile__button-submit"

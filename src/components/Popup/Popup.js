@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import './Popup.css';
 
@@ -24,16 +24,22 @@ function Popup({ isOpened, onButtonClick }) {
             >
               Главная
             </NavLink>
+          </li>
+          <li>
             <NavLink
               to="/movies"
+              exact={true}
               className="popup-nav__link"
               activeClassName="popup-nav__link_active"
               onClick={ onButtonClick }
             >
               Фильмы
             </NavLink>
+          </li>
+          <li>
             <NavLink
               to="/saved-movies"
+              exact={true}
               className="popup-nav__link"
               activeClassName="popup-nav__link_active"
               onClick={ onButtonClick }
@@ -43,13 +49,14 @@ function Popup({ isOpened, onButtonClick }) {
           </li>
         </ul>
         <div className="popup-nav__account">
-          <Link
+          <NavLink
             to="/profile"
+            exact={true}
             className="popup-nav__account-link"
             onClick={ onButtonClick }
           >
               Аккаунт
-          </Link>
+          </NavLink>
         </div>
       </div>
     </section>

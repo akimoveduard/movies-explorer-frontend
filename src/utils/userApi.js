@@ -16,7 +16,6 @@ function handleResponse(response) {
 }
 
 export const register = (username, email, password) => {
-
   return fetch(`${CONFIG.baseUrl}/signup`, {
     method: 'POST',
     credentials: 'include',
@@ -31,7 +30,6 @@ export const register = (username, email, password) => {
 }
 
 export const login = (email, password) => {
-
   return fetch(`${CONFIG.baseUrl}/signin`, {
     method: 'POST',
     credentials: 'include',
@@ -45,7 +43,6 @@ export const login = (email, password) => {
 }
 
 export const update = (name, email, token) => {
-
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'PATCH',
     credentials: 'include',
@@ -63,7 +60,6 @@ export const update = (name, email, token) => {
 }
 
 export const getUser = () => {
-
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',
@@ -74,10 +70,43 @@ export const getUser = () => {
 }
 
 export const checkToken = (token) => {
-
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',
+    headers: {
+      ...CONFIG.headers,
+      Authorization: `Bearer ${token}`,
+    }
+  })
+  .then(response => handleResponse(response));
+}
+
+export const saveMovie = ({movie, token}) => {
+  return fetch(`${CONFIG.baseUrl}/movies`, {
+    method: "POST",
+    headers: {
+      ...CONFIG.headers,
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(movie),
+  })
+  .then(response => handleResponse(response));
+};
+
+export const getMovies = (token) => {
+  return fetch(`${CONFIG.baseUrl}/movies`, {
+    method: "GET",
+    headers: {
+      ...CONFIG.headers,
+      Authorization: `Bearer ${token}`,
+    }
+  })
+  .then(response => handleResponse(response));
+}
+
+export const deleteMovie = (id, token) => {
+  return fetch(`${CONFIG.baseUrl}/movies/${id}`, {
+    method: "DELETE",
     headers: {
       ...CONFIG.headers,
       Authorization: `Bearer ${token}`,

@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserContext } from '../../contexts/UserContext';
 
 const ProtectedRoute = ({ component: Component, isLoggedIn, ...props }) => {
 
+  if (isLoggedIn === undefined) return null;
+  
   return (
     <Route>
-      {isLoggedIn
+      {() => isLoggedIn
         ? <Component {...props} /> 
-        : <Redirect to="/signin" /> 
+        : <Redirect to="/signin" />
       }
     </Route>
   )

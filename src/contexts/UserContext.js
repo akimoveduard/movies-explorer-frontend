@@ -4,8 +4,8 @@ export const UserContext = createContext();
 
 const initUserState = {
   currentUser: {
-    name: 'name',
-    email: 'email@mail.ru'
+    name: '',
+    email: ''
   },
   isLoggedIn: undefined,
 };

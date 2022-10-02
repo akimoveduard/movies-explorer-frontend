@@ -1,6 +1,8 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { useHistory } from "react-router-dom";
 
 import Form from "../Form/Form";
 
@@ -12,10 +14,18 @@ const CLOSE_LINK_SETTINGS = {
 }
 
 function Auth({
+  isLoggedIn,
   onLogin,
   isFormErrorMessageShown,
-  formErrorMessage
+  formErrorMessage,
+  clearErrors,
 }) {
+
+  const history = useHistory();
+
+  React.useEffect(() => {
+    clearErrors();
+  }, [history]);
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -46,6 +56,8 @@ function Auth({
   const handleLogin = () => {
     onLogin(email, password);
   }
+
+  if (isLoggedIn) return <Redirect to="/profile" />;
 
   return (
     <main className="auth">

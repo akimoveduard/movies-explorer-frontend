@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./RegAuthLinks.css";
 
@@ -9,20 +9,20 @@ function RegAuthLinks() {
     <nav className="reg-auth-links">
       <ul className="reg-auth-links__list">
         <li className="reg-auth-links__list-item">
-          <NavLink
+          <Link
             to="/signup"
             className="reg-auth-links__link"
           >
             Регистрация
-          </NavLink>
+          </Link>
         </li>
         <li className="reg-auth-links__list-item">
-          <NavLink
+          <Link
             to="/signin"
             className="reg-auth-links__link button-link"
           >
             Войти
-          </NavLink>
+          </Link>
         </li>
       </ul>
     </nav>

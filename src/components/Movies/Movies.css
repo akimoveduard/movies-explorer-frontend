@@ -4,6 +4,7 @@
   width: calc(100% - 140px);
   margin: 35px auto 0;
   padding: 0 70px;
+  position: relative;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,0 +1,18 @@
+.notification-message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #2BE080;
+  margin: 5px 0 10px;
+  padding: 0 0 10px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .notification-message {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+}

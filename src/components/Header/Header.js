@@ -22,7 +22,7 @@ function Header({
   return (
     <>
       {isHeaderShown &&
-        <header className={`header${location==='/' && " header_theme_dark"}`}>
+        <header className={`header${location==='/' ? " header_theme_dark" : ''}`}>
           <div className="header__content">
           {(location !== '/') 
             ? (
@@ -32,7 +32,7 @@ function Header({
             ) : (
             <img className="logo" src={logo} alt="Movies Explorer" />
           )}
-          {isLoggedIn && location !== '/'
+          {isLoggedIn
             ? <>
                 <Navigation />
                 <BurgerButton

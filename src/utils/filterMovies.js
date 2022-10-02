@@ -1,19 +1,12 @@
-const filterMovies = (searchRequest, onlyShortfilms, moviesData) => {
-
-  const filterMoviesByRequest = (movie) => {
-    return JSON.stringify(movie).toLowerCase().includes(searchRequest.toLowerCase());
-  }
-
-  const filterMovisByDuration = (movie) => {
-    return movie.duration <= 40;
-  }
-
-  if (!onlyShortfilms) {
-    return moviesData.filter(filterMoviesByRequest);
-  } else {
-    return moviesData.filter(filterMovisByDuration).filter(filterMoviesByRequest);
-  }
-
+export function filterMovies(movies, request, isShortMoviesOn) {
+  return movies.filter((movie) => {
+    if (isShortMoviesOn) {
+      return ((movie.nameRU.toLowerCase().includes(request.toLowerCase()) ||
+        movie.nameEN.toLowerCase().includes(request.toLowerCase())) &&
+        movie.duration <= 40);
+    } else {
+      return (movie.nameRU.toLowerCase().includes(request.toLowerCase()) ||
+        movie.nameEN.toLowerCase().includes(request.toLowerCase()));
+    }
+  })
 }
-
-export default filterMovies;

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { useHistory } from "react-router-dom";
 
 import Form from "../Form/Form";
 
@@ -12,10 +14,19 @@ const CLOSE_LINK_SETTINGS = {
 }
 
 function Register({
+  isLoggedIn,
   onRegistration,
   isFormErrorMessageShown,
-  formErrorMessage
+  formErrorMessage,
+  clearErrors,
 }) {
+
+  const history = useHistory();
+  
+  useEffect(() => {
+    clearErrors();
+  }, [history]);
+
 
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -51,6 +62,8 @@ function Register({
   const handleRegistration = () => {
     onRegistration(username, email, password);
   }
+
+  if (isLoggedIn) return <Redirect to="/profile" />;
 
   return (
     <main className="register">
