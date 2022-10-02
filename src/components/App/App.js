@@ -153,6 +153,7 @@ function App() {
   /* saved-movies handlers */
 
   const getSavedMovies = async (token) => {
+    checkToken(token);
     try {
       const downloadedSavedMovies = await userApi.getMovies(token);
       setSavedMovies(downloadedSavedMovies);
@@ -185,6 +186,7 @@ function App() {
   const handleMoviesSearch = async (request) => {
     setIsLoading(true);
     setSearchError(false);
+    checkToken(token);
     try {
       const downloadedMovies = (!movies.length) ? await moviesApi.getMovies() : movies;
       setMovies(downloadedMovies);
@@ -205,7 +207,8 @@ function App() {
   /* save, delete movies handlers */
 
   const handleSaveButtonClick = async (movie) => {
-    try {
+    checkToken(token);
+    try {      
       const savedMovie = await
         userApi.saveMovie(
           {movie: {
@@ -233,7 +236,8 @@ function App() {
   };
 
   const handleDeleteMovie = (movie) => {
-    try {
+    checkToken(token);
+    try {      
       const moviesToDelete = !movie._id ?
       savedMovies.filter(item => item.movieId === movie.id) :
       [movie];
@@ -305,6 +309,7 @@ function App() {
   }
 
   function handleUpdateProfile(username, email) {
+    checkToken(token);
     userApi.update(username, email, token)
       .then((res) => {
         setCurrentUser(res);
@@ -337,20 +342,26 @@ function App() {
         setCurrentUser(res);
       })
       .catch((error) => {
-        setIsLoggedIn(false);
+        handleLogout();
         handleFormErrorMessage(error);
       });
   };
 
-  useEffect(() => {    
-    setIsShortFilmsOn(Boolean(localStorage.getItem('searchShortFilms')));
-    getSavedMovies(token);
-    setNotificationMessage('');
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsShortFilmsOn(Boolean(localStorage.getItem('searchShortFilms')));
+      getSavedMovies(token);
+      setNotificationMessage('');
+    } else {
+        handleLogout();
+      }
   }, [isLoggedIn]);
 
   useEffect(() => {    
     if (token) checkToken(token);
-    else setIsLoggedIn(false);
+    else {
+      handleLogout();
+    }
   }, []);
 
   return (
