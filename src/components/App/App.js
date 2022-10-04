@@ -276,7 +276,6 @@ function App() {
   function clearFormErrorMessage() {
     setIsFormErrorMessageShown(false);
     setFormErrorMessage('');
-    setNotificationMessage('');
   }
 
   function handleFormErrorMessage(error) {
@@ -314,7 +313,6 @@ function App() {
       checkToken();
       setIsLoggedIn(true);
       setIsFormErrorMessageShown(false);
-      setButtonSubmitEnable(true);
       history.push('/movies');
     })
     .catch((error) => {
@@ -335,6 +333,7 @@ function App() {
         })
         .catch((error) => {
           handleFormErrorMessage(error);
+          setNotificationMessage('');
         })
         .finally(() => setButtonSubmitEnable(true));
     }
