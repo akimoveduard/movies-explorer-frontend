@@ -2,8 +2,8 @@ import { createContext, useReducer } from "react";
 export const MoviesContext = createContext();
 
 const initMoviesState = {
-  isShortFilmsOn: undefined,
-  isSavedShortFilmsOn: undefined,
+  isShortFilmsOn: false,
+  isSavedShortFilmsOn: false,
 }
 
 export const moviesReducer = (state, action) => {

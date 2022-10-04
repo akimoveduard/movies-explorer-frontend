@@ -43,3 +43,5 @@ export const CARDSLIST_LENGTH = {
     morecards: 2,
   }
 }
+
+export const SHORTMOVIE_DURATION = 40;

@@ -35,8 +35,6 @@ function App() {
   
   const history = useHistory();
 
-  const token = (localStorage.getItem('jwt'));
-
   const statPrevFilteredMovies = () => {
     if (localStorage.getItem('prevFilteredMovies') &&
         JSON.parse(localStorage.getItem('prevFilteredMovies')).length === 0) {
@@ -161,10 +159,9 @@ function App() {
 
   /* saved-movies handlers */
 
-  const getSavedMovies = async (token) => {
-    (checkToken(token));
+  const getSavedMovies = async () => {
     try {
-      const downloadedSavedMovies = await mainApi.getMovies(token);
+      const downloadedSavedMovies = await mainApi.getMovies();
       setSavedMovies(downloadedSavedMovies);
       setSavedMoviesIds(arraySavedMoviesIds(downloadedSavedMovies));
       setIsSavedMoviesLoaded(true);
@@ -201,13 +198,14 @@ function App() {
   const handleMoviesSearch = async (request) => {
     setIsLoading(true);
     setSearchError(false);
-    checkToken(token);
     try {
       const downloadedMovies = (!movies.length) ? await moviesApi.getMovies() : movies;
       setMovies(downloadedMovies);
-      setFilteredMovies(filterMovies(downloadedMovies, request, isShortFilmsOn));
-      localStorage.setItem('prevSearchRequest', request);
-      setSearchRequest(request);
+      if (request) {
+        setFilteredMovies(filterMovies(downloadedMovies, request, isShortFilmsOn));
+        localStorage.setItem('prevSearchRequest', request);
+        setSearchRequest(request);
+      }
     }
     catch (error) {
       console.log(error);
@@ -221,8 +219,7 @@ function App() {
   /* save, delete movies handlers */
 
   const handleSaveButtonClick = async (movie) => {
-    checkToken(token);
-    try {      
+    try {
       const savedMovie = await
         mainApi.saveMovie(
           {movie: {
@@ -237,8 +234,7 @@ function App() {
               movieId: movie.id,
               nameRU: movie.nameRU || '—',
               nameEN: movie.nameEN || '—'
-            },
-            token,
+            }
           });
       setSavedMovies([...savedMovies, savedMovie]);
       setSavedMoviesIds([...savedMoviesIds, movie.id]);
@@ -250,13 +246,12 @@ function App() {
   };
 
   const handleDeleteMovie = (movie) => {
-    checkToken(token);
     try {      
       const moviesToDelete = !movie._id ?
       savedMovies.filter(item => item.movieId === movie.id) :
       [movie];
       moviesToDelete.map((deletingMovie) => {
-        mainApi.deleteMovie(deletingMovie._id, token);
+        mainApi.deleteMovie(deletingMovie._id);
         setSavedMovies(savedMovies.filter((item) => item._id !== deletingMovie._id));
         setSavedMoviesIds(savedMoviesIds.filter((item) => item !== deletingMovie.movieId));
         return ('');
@@ -299,7 +294,7 @@ function App() {
   }
 
   function handleRegistration(username, email, password) {
-    setButtonSubmitEnable(false);    
+    setButtonSubmitEnable(false);
     userApi.register(username, email, password)
       .then((res) => {
         handleLogin(email, password);
@@ -311,32 +306,32 @@ function App() {
       .finally(() => setButtonSubmitEnable(true));
   }
 
-  function handleLogin(email, password) {
+  async function handleLogin(email, password) {
     setButtonSubmitEnable(false);
     userApi.login(email, password)
-      .then((res) => {
-        localStorage.setItem('jwt', res.token);
-        checkToken(localStorage.getItem('jwt'));
-        setIsLoggedIn(true);
-        setIsFormErrorMessageShown(false);
-        setButtonSubmitEnable(true);
-        history.push('/movies');
-      })
-      .catch((error) => {
-        handleFormErrorMessage(error);
-        setIsLoggedIn(false);
-      })
-      .finally(() => setButtonSubmitEnable(true));
+    .then((res) => {
+      localStorage.setItem('jwt', res.token);
+      checkToken(localStorage.getItem('jwt'));
+      setIsLoggedIn(true);
+      setIsFormErrorMessageShown(false);
+      setButtonSubmitEnable(true);
+      history.push('/movies');
+    })
+    .catch((error) => {
+      handleFormErrorMessage(error);
+      setIsLoggedIn(false);
+    })
+    .finally(() => setButtonSubmitEnable(true));
   }
 
   function handleUpdateProfile(username, email) {
-    checkToken(token);
     setButtonSubmitEnable(false);
     if (username !== currentUser.name || email !== currentUser.email) {
-      userApi.update(username, email, token)
+      userApi.update(username, email)
         .then((res) => {
           setCurrentUser(res);
           setNotificationMessage(PROFILE_UPDATE_SUCCESS_MESSAGE);
+          clearFormErrorMessage();
         })
         .catch((error) => {
           handleFormErrorMessage(error);
@@ -354,12 +349,21 @@ function App() {
     setMovies([]);
     setFilteredMovies([]);
     setSearchRequest('');
+    setSavedMovies([]);
+    setSavedMoviesIds([]);
+    setIsShortFilmsOn(false);
 
     history.push('/');
   }
 
-  const checkToken = (token) => {
-    userApi.checkToken(token)
+  function restoreFilteredMovies() {
+    if (localStorage.getItem('prevSearchRequest')) {
+      handleMoviesSearch(localStorage.getItem('prevSearchRequest'));
+    }
+  }
+
+  const checkToken = () => {
+    userApi.checkToken()
       .then((res) => {
         setIsLoggedIn(true);
         setCurrentUser(res);
@@ -372,14 +376,14 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      setIsShortFilmsOn(Boolean(localStorage.getItem('searchShortFilms')));
-      if (!isSavedMoviesLoaded) getSavedMovies(token);
+      if (!isSavedMoviesLoaded) getSavedMovies();
       setNotificationMessage('');
+      restoreFilteredMovies();
     }
   }, [isLoggedIn]);
 
   useEffect(() => {
-    if (token) checkToken(token);
+    if (localStorage.getItem('jwt')) checkToken();
     else setIsLoggedIn(false);
   }, []);
 
