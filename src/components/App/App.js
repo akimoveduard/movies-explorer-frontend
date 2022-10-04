@@ -376,7 +376,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (!isSavedMoviesLoaded) getSavedMovies();
+      getSavedMovies();
       setNotificationMessage('');
       restoreFilteredMovies();
     }
