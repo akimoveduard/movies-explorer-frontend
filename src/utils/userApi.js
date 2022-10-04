@@ -42,7 +42,8 @@ export const login = (email, password) => {
   .then(response => handleResponse(response));
 }
 
-export const update = (name, email, token = localStorage.getItem('jwt')) => {
+export const update = (name, email) => {
+  const token = localStorage.getItem('jwt');
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'PATCH',
     credentials: 'include',
@@ -68,7 +69,8 @@ export const getUser = () => {
   .then(response => handleResponse(response));
 }
 
-export const checkToken = (token = localStorage.getItem('jwt')) => {
+export const checkToken = () => {
+  const token = localStorage.getItem('jwt');
   return fetch(`${CONFIG.baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',

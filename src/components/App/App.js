@@ -311,7 +311,7 @@ function App() {
     userApi.login(email, password)
     .then((res) => {
       localStorage.setItem('jwt', res.token);
-      checkToken(localStorage.getItem('jwt'));
+      checkToken();
       setIsLoggedIn(true);
       setIsFormErrorMessageShown(false);
       setButtonSubmitEnable(true);

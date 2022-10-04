@@ -15,7 +15,8 @@ function handleResponse(response) {
   }
 }
 
-export const saveMovie = ({movie, token = localStorage.getItem('jwt')}) => {
+export const saveMovie = ({movie}) => {
+  const token = localStorage.getItem('jwt');
   return fetch(`${CONFIG.baseUrl}/movies`, {
     method: "POST",
     headers: {
@@ -27,7 +28,8 @@ export const saveMovie = ({movie, token = localStorage.getItem('jwt')}) => {
   .then(response => handleResponse(response));
 };
 
-export const getMovies = (token = localStorage.getItem('jwt')) => {
+export const getMovies = () => {
+  const token = localStorage.getItem('jwt');
   return fetch(`${CONFIG.baseUrl}/movies`, {
     method: "GET",
     headers: {
@@ -38,7 +40,8 @@ export const getMovies = (token = localStorage.getItem('jwt')) => {
   .then(response => handleResponse(response));
 }
 
-export const deleteMovie = (id, token = localStorage.getItem('jwt')) => {
+export const deleteMovie = (id) => {
+  const token = localStorage.getItem('jwt');
   return fetch(`${CONFIG.baseUrl}/movies/${id}`, {
     method: "DELETE",
     headers: {
