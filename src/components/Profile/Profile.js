@@ -16,6 +16,7 @@ function Profile({
   formErrorMessage,
   notificationMessage,
   clearErrors,
+  clearNotification,
   buttonSubmitEnable,
   setButtonSubmitEnable
 }) {
@@ -24,6 +25,7 @@ function Profile({
   
   React.useEffect(() => {
     clearErrors();
+    clearNotification();
   }, [history]);
   
   const [username, setUsername] = React.useState(currentUser.name);

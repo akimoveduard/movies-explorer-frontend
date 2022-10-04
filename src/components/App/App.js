@@ -278,6 +278,10 @@ function App() {
     setFormErrorMessage('');
   }
 
+  function clearNotification() {
+    setNotificationMessage('');
+  }
+
   function handleFormErrorMessage(error) {
     if (error.message) {
       const errorType = (error.message).toString().toLowerCase() || '500';
@@ -407,6 +411,7 @@ function App() {
                 formErrorMessage={formErrorMessage}
                 notificationMessage={notificationMessage}
                 clearErrors={clearFormErrorMessage}
+                clearNotification={clearNotification}
                 buttonSubmitEnable={buttonSubmitEnable}
                 setButtonSubmitEnable={setButtonSubmitEnable}
               />
