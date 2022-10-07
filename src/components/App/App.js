@@ -242,23 +242,24 @@ function App() {
     catch (error) {
       console.log(error);
       setSearchError(ERROR_MESSAGES['search error']);
+      checkToken();
     }
   };
 
-  const handleDeleteMovie = (movie) => {
+  const handleDeleteMovie = async (movie) => {
     try {      
       const moviesToDelete = !movie._id ?
-      savedMovies.filter(item => item.movieId === movie.id) :
-      [movie];
-      moviesToDelete.map((deletingMovie) => {
+      savedMovies.filter(item => item.movieId === movie.id) : [movie];
+      await moviesToDelete.map((deletingMovie) => {
+        checkToken();
         mainApi.deleteMovie(deletingMovie._id);
         setSavedMovies(savedMovies.filter((item) => item._id !== deletingMovie._id));
-        setSavedMoviesIds(savedMoviesIds.filter((item) => item !== deletingMovie.movieId));
-        return ('');
+        setSavedMoviesIds(savedMoviesIds.filter((item) => item !== deletingMovie.movieId));        
+        return movie;
       });
     }
     catch (error) {
-      console.log(error);
+      console.log(error);      
     }
   };
 
@@ -314,7 +315,6 @@ function App() {
     userApi.login(email, password)
     .then((res) => {
       localStorage.setItem('jwt', res.token);
-      checkToken();
       setIsLoggedIn(true);
       setIsFormErrorMessageShown(false);
       history.push('/movies');
@@ -338,6 +338,7 @@ function App() {
         .catch((error) => {
           handleFormErrorMessage(error);
           setNotificationMessage('');
+          checkToken();
         })
         .finally(() => setButtonSubmitEnable(true));
     }

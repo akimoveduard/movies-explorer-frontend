@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 export const MoviesContext = createContext();
 
 const initMoviesState = {
-  isShortFilmsOn: false,
+  isShortFilmsOn: Boolean(localStorage.getItem('searchShortFilms')),
   isSavedShortFilmsOn: false,
 }
 
