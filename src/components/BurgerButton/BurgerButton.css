@@ -19,4 +19,8 @@
     visibility: hidden;
   }
 
+  .header_theme_dark .burger-button {
+    background-image: url(../../images/menu-open-icon-white.svg);
+  }
+
 }

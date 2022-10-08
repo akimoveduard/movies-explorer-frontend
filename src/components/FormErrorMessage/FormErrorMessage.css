@@ -1,0 +1,18 @@
+.form-error-message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FF004C;
+  margin: 5px 0 10px;
+  padding: 0 0 10px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .form-error-message {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+}

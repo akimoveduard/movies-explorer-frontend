@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './Navigation.css';
 
@@ -9,37 +9,36 @@ function Navigation() {
     <nav className="nav">
       <ul className="nav__links">
         <li className="nav__links-item">
-          <Link
-            to="/"
+          <NavLink
+            exact to="/"
             className="nav__link nav__link_main"
             >
             Главная
-          </Link>
+          </NavLink>
         </li>
         <li className="nav__links-item">
-          <Link
-            to="/movies"
+          <NavLink
+            exact to="/movies"
             className="nav__link nav__link_movies"
           >
           Фильмы
-          </Link>
+          </NavLink>
         </li>
         <li className="nav__links-item">
-          <Link
-            to="/saved-movies"
+          <NavLink
+            exact to="/saved-movies"
             className="nav__link nav__link_saved-movies"
           >
             Сохраненные фильмы
-          </Link>
-          
+          </NavLink>          
         </li>
       </ul>
-      <Link
-        to="/profile"
+      <NavLink
+        exact to="/profile"
         className="nav__link nav__link_profile"
       >
         Аккаунт
-      </Link>
+      </NavLink>
     </nav>
   );
 };

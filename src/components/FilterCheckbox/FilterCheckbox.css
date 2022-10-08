@@ -31,31 +31,32 @@
   display: inline-block;
   width: 36px;
   height: 20px;
-  background-color: #2BE080;
+  background-color: #EBEBEB;
   border-radius: 15px;
   position: relative;
   cursor: pointer;
 }
 
 .filter-checkbox__checkbox:checked + .filter-checkbox__pseudo-checkbox {
-  background-color: #EBEBEB;
+  background-color: #2BE080;
 }
 
 .filter-checkbox__pseudo-checkbox::after {
   position: absolute;
   display: inline-block;
   content: '';
-  background-color: #FFFFFF;
+  background-color: #F5F5F5;
   border-radius: 50%;
   width: 8px;
   height: 8px;
   top: 6px;
-  right: 6px;
+  left: 6px;  
 }
 
 .filter-checkbox__checkbox:checked + .filter-checkbox__pseudo-checkbox::after {
-  left: 6px;
-  background-color: #F5F5F5;
+  left: auto;
+  right: 6px;
+  background-color: #FFFFFF;
 }
 
 @media screen and (max-width: 768px) {

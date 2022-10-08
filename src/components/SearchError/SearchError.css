@@ -1,0 +1,9 @@
+.search-error__message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 30px 15%;
+  padding: 10px;
+  border: 1px solid #FF004C;
+  background-color: #F4F4F4;
+}

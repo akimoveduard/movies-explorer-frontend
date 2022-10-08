@@ -44,14 +44,19 @@
 }
 
 .form__input-error {
-  /*display: none;*/
+  border: 1px solid #EE3465;
+  background-color: rgba(255, 104, 56, 0.1);
+  color: #EE3465;
+}
+
+.form__error-message {
   color: #FF3055;
   font-size: 10px;
   line-height: 12px;
   padding-bottom: 10px;
 }
 
-.form__input-error:last-of-type {
+.form__error-message:last-of-type {
   padding-bottom: 0;
 }
 
@@ -66,6 +71,11 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
+}
+
+.form__button:disabled {
+  background-color: #F8F8F8;
+  color: #C2C2C2;
 }
 
 .form__close-text {

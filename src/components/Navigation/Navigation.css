@@ -25,6 +25,10 @@
   color: #000000;
 }
 
+.header_theme_dark .nav__link {
+  color: #fff
+}
+
 .nav__link:hover {
   opacity: 0.8;
 }
